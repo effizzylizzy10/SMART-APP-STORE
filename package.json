@@ -1,0 +1,23 @@
+{
+  "name": "app-hub-3d",
+  "version": "1.0.0",
+  "private": true,
+  "description": "App Hub 3D - web + Android APK",
+  "scripts": {
+    "build": "echo web app is static, nothing to build",
+    "cap:add": "cap add android",
+    "cap:sync": "cap sync android",
+    "apk:debug": "cap sync android && cd android && ./gradlew assembleDebug",
+    "deploy:netlify": "netlify deploy --prod --dir=www",
+    "deploy:vercel": "vercel --prod"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2",
+    "netlify-cli": "^17.36.0",
+    "vercel": "^37.14.0"
+  }
+}
