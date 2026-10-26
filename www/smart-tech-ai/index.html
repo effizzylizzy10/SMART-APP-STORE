@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<script>if(!/\/$|\.[a-z0-9]+$/i.test(location.pathname))location.replace(location.pathname+'/'+location.search+location.hash)</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0c16">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="color-scheme" content="dark">
+<title>Smart Tech AI</title>
+<link rel="stylesheet" href="css/styles.css">
+</head><body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div id="back"></div>
+<aside id="side">
+  <div class="brand"><div class="logo"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>Smart Tech AI</div>
+  <button id="new"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New chat</button>
+  <div id="list"></div>
+  <button class="g" id="set" style="display:flex;align-items:center;justify-content:center;gap:8px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+</aside>
+<main>
+  <header><button class="g ib" id="menu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><b>Smart Tech AI</b><div id="pill"><i></i><span id="pt">Auto</span></div></header>
+  <div id="log"></div>
+  <div id="pend"></div>
+  <form id="f">
+    <button type="button" class="ib plain" id="attach" title="Add photo" aria-label="Add photo"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
+    <input type="file" id="file" accept="image/*" multiple hidden>
+    <textarea id="t" rows="1" placeholder="Ask anything…"></textarea>
+    <button type="button" class="ib plain" id="mic" title="Voice to text" aria-label="Voice to text"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8"/></svg></button>
+    <button id="s" class="ib" aria-label="Send"><svg class="sendi" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg><svg class="stopi" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg></button>
+  </form>
+</main>
+
+<div id="cfg"><div>
+  <h2>Settings</h2>
+  <small style="margin:0 0 6px">Add keys for any providers you have. Smart Tech AI tries them in this order and switches automatically when one runs out of free tokens or fails.</small>
+  <label>Offline models (free, lightweight)</label>
+  <small style="margin:0 0 8px">Install one while you have internet. It is saved on this phone and then answers with no connection. In Auto mode the app switches to your installed model by itself when you go offline.</small>
+  <div id="models"></div>
+  <small id="storeinfo" style="margin:0 0 6px"></small>
+  <label>Mode</label>
+  <select id="mode"><option value="auto">Auto — use my API keys (recommended)</option></select>
+  <div id="rows"></div>
+  <small id="localnote">On-device runs the model on your phone. Install a model above while you are online; after that it works with no internet.</small>
+  <label style="display:flex;gap:8px;align-items:center;color:var(--fg);margin-top:16px"><input type="checkbox" id="extras" style="width:auto"> Live search &amp; creative studio</label>
+  <small style="margin-top:2px">Finds news and posts, researches references online, and designs logos, icons, images and GIFs. Runs only when the answer comes from a free tier that resets (Gemini, Groq, OpenRouter, Hugging Face, Cerebras, SambaNova, Cloudflare).</small>
+  <label style="display:flex;gap:8px;align-items:center;color:var(--fg);margin-top:16px"><input type="checkbox" id="learn" style="width:auto"> Self-learn every 24 hours</label>
+  <small style="margin-top:2px">While online, the app researches public, open sources and saves notes in this browser for on-device mode: Wikipedia, global news in many languages, Hacker News stories and comments, Stack Exchange answers, research papers, public forum and social posts (kept as unverified chatter), books and archives, plus this day in history. Where it can, a free-tier AI condenses each topic into a labelled briefing. It cannot read every website, and it does not retrain the model.</small>
+  <label>Research depth</label>
+  <select id="learndepth"><option value="light">Light: 3 sources, about 5 topics a day</option><option value="standard">Standard: 6 sources, about 9 topics a day</option><option value="deep">Deep: 8 sources, about 16 topics a day, extra languages and briefings</option></select>
+  <small style="margin-top:2px">Your chat keywords are sent to those public sources as search terms. Briefings use a little of your free AI quota. Skipped automatically when your browser has Data Saver on.</small>
+  <small id="kbstat" style="margin-top:6px;color:var(--fg)"></small>
+  <div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="g" id="learnnow">Learn now</button><button type="button" class="g" id="learnclear">Clear learned</button></div>
+  <label>System instructions</label>
+  <textarea id="sysprompt" rows="4" style="resize:vertical"></textarea>
+  <label>Contact number (shown on spec sheets)</label><input id="phone" autocapitalize="off" autocorrect="off">
+  <small>Keys are stored only in this browser and sent only to their own provider.</small>
+  <small id="warn"></small>
+  <div style="display:flex;gap:8px;margin-top:16px">
+    <button id="ok" style="flex:1">Save</button><button class="g" id="close">Cancel</button>
+  </div>
+</div></div>
+<div id="toasts"></div>
+<div id="lb"><img alt=""></div>
+<script src="js/config.js"></script>
+<script src="js/studio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/knowledge.js"></script>
+<script src="js/research.js"></script>
+<script src="js/offline.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/main.js"></script>
+<script src="js/background.js"></script>
+</body></html>
