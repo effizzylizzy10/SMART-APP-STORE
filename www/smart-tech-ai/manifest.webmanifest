@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "Smart Tech AI",
+  "short_name": "Smart Tech AI",
+  "description": "AI chat that works online and offline",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a0c16",
+  "theme_color": "#0a0c16",
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
